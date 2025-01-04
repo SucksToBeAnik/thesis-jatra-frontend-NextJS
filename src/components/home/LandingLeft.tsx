@@ -1,12 +1,14 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
+import SignupFormDialog from "../auth/SignupFormDialog";
+import LoginFormDialog from "../auth/LoginFormDialog";
 
 export default function LandingLeft() {
   return (
     <div className="flex flex-col items-start justify-start">
       <div className="flex items-center mb-20">
-        <Button variant="link">Login</Button>
-        <Button variant="link">Sign Up</Button>
+        <LoginFormDialog />
+        <SignupFormDialog />
         <Button variant="link" className="ml-8">
           Find Group
         </Button>

@@ -1,6 +1,6 @@
 import LandingLeft from "./LandingLeft";
 import LandingRight from "./LandingRight";
-import WaveSvg from "./WaveSvg";
+// import WaveSvg from "./WaveSvg";
 
 export default function Landing() {
   return (

@@ -1,6 +1,7 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Home, BookOpen, Group, User2, LayoutDashboard } from "lucide-react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { getCurrentProfile } from "@/db-actions/auth";
+import { createClient } from "@/utils/supabase/server";
 import {
   Sidebar,
   SidebarContent,
@@ -13,7 +14,7 @@ import {
   SidebarMenuItem,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-import { ToggleTheme } from "./ToggleTheme";
+import SidebarFooterContent from "./SidebarFooterContent";
 
 // Menu items.
 const items = [
@@ -25,26 +26,40 @@ const items = [
   {
     title: "Papers",
     url: "/papers",
-    icon: Inbox,
+    icon: BookOpen,
   },
   {
     title: "Groups",
     url: "/groups",
-    icon: Calendar,
+    icon: Group,
   },
   {
     title: "Dashboard",
     url: "/dashboard",
-    icon: Search,
+    icon: LayoutDashboard,
   },
   {
     title: "Profile",
     url: "/profile",
-    icon: Settings,
+    icon: User2,
   },
 ];
 
-export function AppSidebar() {
+export async function AppSidebar() {
+  let userFullname = "Stranger";
+  let userEmail;
+  let userProfileType: "STUDENT" | "TEACHER" | "TA" | undefined;
+  let userProfileImageUrl;
+
+  const db = createClient();
+  const profileQueryResult = await getCurrentProfile(db);
+  console.log("----profileQueryResult from AppSidebar-----", profileQueryResult);
+  if (profileQueryResult.success) {
+    userFullname = profileQueryResult.data.fullname;
+    userEmail = profileQueryResult.data.email;
+    userProfileType = profileQueryResult.data.profile_type;
+    userProfileImageUrl = profileQueryResult.data.profile_image_url || undefined;
+  }
   return (
     <Sidebar>
       <SidebarHeader>
@@ -84,21 +99,13 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="p-2 shadow-md dark:shadow-gray-300 shadow-gray-600 rounded-md">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center justify-center gap-1">
-            <p className="text-xs text-muted-foreground font-semibold p-2 rounded-full bg-gray-200">
-              AJ
-            </p>
-            <div className="flex flex-col items-start justify-start">
-              <p className="text-sm whitespace-nowrap">Al Jami Islam Anik</p>
-              <p className="text-xs text-muted-foreground font-semibold">
-                anik.islam@gmail.com
-              </p>
-            </div>
-          </div>
-          <ToggleTheme />
-        </div>
+      <SidebarFooter className="p-2">
+        <SidebarFooterContent
+          fullname={userFullname}
+          email={userEmail}
+          profileType={userProfileType}
+          profileImage={userProfileImageUrl}
+        />
       </SidebarFooter>
     </Sidebar>
   );

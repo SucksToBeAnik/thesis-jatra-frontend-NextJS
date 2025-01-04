@@ -4,6 +4,7 @@ import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { ThemeProvider } from "@/components/home/ThemeProvider";
 import { AppSidebar } from "@/components/home/AppSidebar";
+import { Toaster } from "@/components/ui/sonner";
 
 const anton = Anton({
   subsets: ["latin"],
@@ -39,6 +40,7 @@ export default function RootLayout({
             <AppSidebar />
             <SidebarTrigger />
             {children}
+            <Toaster />
           </SidebarProvider>
         </ThemeProvider>
       </body>
