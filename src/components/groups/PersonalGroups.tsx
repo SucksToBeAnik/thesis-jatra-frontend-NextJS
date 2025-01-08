@@ -15,6 +15,9 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { InfoIcon } from "lucide-react";
 import GroupJoinRequestCancelButton from "./GroupJoinRequestCancelButton";
+import Link from "next/link";
+import AcceptInvitationButton from "./AcceptInvitationButton";
+import DeclineInvitationButton from "./DeclineInvitationButton";
 
 interface PersonalGroupsProps {
   groups: ThesisGroupProfileWithGroups[];
@@ -46,8 +49,10 @@ export default function PersonalGroups({
                   </div>
                 </CardHeader>
                 <CardContent className="flex items-center justify-between p-2">
-                  <Button variant="default" size="sm">
-                    Visit Group →
+                  <Button asChild variant="default" size="sm">
+                    <Link href={`/groups/${group.thesis_groups.id}`}>
+                      Visit Group
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -66,6 +71,9 @@ export default function PersonalGroups({
         <TabsContent value="invitations" className="overflow-y-auto">
           {pendingJoinInvitations.length > 0 ? (
             <div className="flex flex-col gap-4 overflow-y-auto">
+              <p className="text-muted-foreground">
+                The following groups have invited you to join their group
+              </p>
               {pendingJoinInvitations.map((invitation) => (
                 <Card key={invitation.id} className="w-1/2 h-[180px]">
                   <CardHeader className="pb-2">
@@ -81,12 +89,13 @@ export default function PersonalGroups({
                   </CardContent>
                   <CardFooter>
                     <div className="flex gap-2">
-                      <Button size="sm" variant="secondary" className="">
-                        Accept
-                      </Button>
-                      <Button size="sm" variant="secondary" className="">
-                        Decline
-                      </Button>
+                      <AcceptInvitationButton
+                        invitationId={invitation.id}
+                        groupId={invitation.invited_by_group_id}
+                        profileId={invitation.desired_profile_id}
+                        role={invitation.offered_role}
+                      />
+                      <DeclineInvitationButton invitationId={invitation.id} />
                     </div>
                   </CardFooter>
                 </Card>
@@ -101,6 +110,9 @@ export default function PersonalGroups({
         <TabsContent value="requests">
           {pendingJoinRequests.length > 0 ? (
             <div className="flex flex-col gap-4 overflow-y-auto">
+              <p className="text-muted-foreground">
+                You have sent requests to these groups to join
+              </p>
               {pendingJoinRequests.map((request) => (
                 <Card className="w-1/2 h-[180px]" key={request.id}>
                   <CardHeader className="pb-2">

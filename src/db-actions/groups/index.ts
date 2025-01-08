@@ -3,6 +3,7 @@ import {
   ThesisGroupProfileWithGroups,
   PendingJoinInvitationsWithGroupData,
   PendingJoinRequestsWithGroupData,
+  JoinGroupRequest,
 } from "@/types/schema";
 import { db, DbQueryResult } from "@/types";
 import { currentAuthUserProc } from "../auth";
@@ -98,6 +99,25 @@ export async function getPendingJoinRequests(
   };
 }
 
+export async function getPendingJoinRequestsGivenGroupId(
+  db: db,
+  groupId: string
+): Promise<DbQueryResult<JoinGroupRequest[]>> {
+  const { data, error } = await db
+    .from("join_group_requests")
+    .select("*,profiles(*)")
+    .eq("desired_group_id", groupId)
+    .eq("request_status", "PENDING");
+  if (error) {
+    return { success: false, message: error.message };
+  }
+  return {
+    success: true,
+    message: "Pending join requests fetched successfully",
+    data: data,
+  };
+}
+
 // UPDATE Queries
 export const addGroupJoinRequest = currentAuthUserProc
   .createServerAction()
@@ -121,6 +141,21 @@ export const addGroupJoinRequest = currentAuthUserProc
     }) => {
       console.log("user", user);
       try {
+        // check if user is already a member of the group
+        const { data, error: userExistError } = await db
+          .from("thesis_group_profiles")
+          .select("*")
+          .eq("group_id", groupId)
+          .eq("profile_id", user.id)
+          .maybeSingle();
+        if (userExistError) {
+          console.log("userExistError", userExistError);
+          throw new Error(userExistError.message);
+        }
+        if (data) {
+          console.log("data", data);
+          throw new Error("User is already a member of this group");
+        }
         const { error } = await db.from("join_group_requests").insert({
           desired_group_id: groupId,
           requested_by: user.id,

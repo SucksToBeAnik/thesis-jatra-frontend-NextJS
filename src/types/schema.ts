@@ -10,6 +10,14 @@ export type JoinGroupRequest =
   Database["public"]["Tables"]["join_group_requests"]["Row"];
 export type JoinGroupInvitation =
   Database["public"]["Tables"]["join_group_invitations"]["Row"];
+export type GroupMessage =
+  Database["public"]["Tables"]["group_messages"]["Row"];
+export type GroupProject =
+  Database["public"]["Tables"]["group_projects"]["Row"];
+export type Draft = Database["public"]["Tables"]["project_drafts"]["Row"];
+export type Resource = Database["public"]["Tables"]["project_resources"]["Row"];
+export type ThesisGroupProfileRoleEnum =
+  Database["public"]["Enums"]["thesis_group_role"];
 
 // custom query types
 const supabase = createClient();
@@ -41,5 +49,24 @@ const getPendingJoinRequestsWithGroupData = supabase
   .maybeSingle();
 export type PendingJoinRequestsWithGroupData = QueryData<
   typeof getPendingJoinRequestsWithGroupData
+>;
+
+const getPublicDraftsWithMemberNames = supabase
+  .from("project_drafts")
+  .select(
+    `
+    *,
+    group_projects (
+      *,
+      thesis_groups(
+      *,
+        thesis_group_profiles(*)
+      )
+    )
+  `
+  )
+  .single();
+export type PublicDraftsWithMemberNames = QueryData<
+  typeof getPublicDraftsWithMemberNames
 >;
 // -------end of custom query types-------

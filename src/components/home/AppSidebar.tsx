@@ -53,7 +53,7 @@ export async function AppSidebar() {
 
   const db = createClient();
   const profileQueryResult = await getCurrentProfile(db);
-  console.log("----profileQueryResult from AppSidebar-----", profileQueryResult);
+  // console.log("----profileQueryResult from AppSidebar-----", profileQueryResult);
   if (profileQueryResult.success) {
     userFullname = profileQueryResult.data.fullname;
     userEmail = profileQueryResult.data.email;

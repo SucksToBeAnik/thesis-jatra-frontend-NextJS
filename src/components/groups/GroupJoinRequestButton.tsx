@@ -103,7 +103,7 @@ export default function GroupJoinRequestButton({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Join Group</Button>
+        <Button variant="outline">Send Join Request</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
