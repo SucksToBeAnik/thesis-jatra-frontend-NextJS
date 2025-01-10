@@ -23,19 +23,31 @@ export default function DraftEditor({ draft }: DraftEditorProps) {
   const [content, setContent] = useState(draft.content || "");
   useEffect(() => {
     const channel = supabase
-      .channel(`drafts:${draft.id}`)
+      .channel(`drafts-${draft.id}`)
       .on(
         "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "project_drafts" },
-        (payload) => {
-          setContent(payload.new.content);
+        { 
+          event: "UPDATE", 
+          schema: "public", 
+          table: "project_drafts",
+          filter: `id=eq.${draft.id}` // Add filter for specific draft
+        },
+        (payload: any) => {
+          console.log("Realtime update received:", payload);
+          if (payload.new && payload.new.content !== content) {
+            setContent(payload.new.content);
+          }
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log("Subscription status:", status);
+      });
+
     return () => {
+      console.log("Cleaning up subscription");
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [draft.id]);
 
   const updateDraftContent = debounce(async (newContent: string) => {
     const updateRes = await updateDraftContentGivenId(

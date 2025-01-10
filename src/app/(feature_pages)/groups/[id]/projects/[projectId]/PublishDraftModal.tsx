@@ -35,10 +35,12 @@ export default function PublishDraftModal({
       })
       .eq("id", draftId);
     if (error) {
+      toast.dismiss();
       console.error("Failed to publish draft");
       toast.error(`Failed to ${isPublic ? "unpublish" : "publish"} draft`);
       return;
     }
+    toast.dismiss();
     toast.success(
       `Draft ${isPublic ? "unpublished" : "published"} successfully`
     );

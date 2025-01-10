@@ -34,11 +34,6 @@ const items = [
     icon: Group,
   },
   {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
     title: "Profile",
     url: "/profile",
     icon: User2,
@@ -58,7 +53,8 @@ export async function AppSidebar() {
     userFullname = profileQueryResult.data.fullname;
     userEmail = profileQueryResult.data.email;
     userProfileType = profileQueryResult.data.profile_type;
-    userProfileImageUrl = profileQueryResult.data.profile_image_url || undefined;
+    userProfileImageUrl =
+      profileQueryResult.data.profile_image_url || undefined;
   }
   return (
     <Sidebar>
