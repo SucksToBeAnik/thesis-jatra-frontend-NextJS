@@ -1,6 +1,9 @@
 "use client";
 
-import { JoinGroupRequest, ThesisGroupProfileRoleEnum } from "@/types/schema";
+import {
+  PendingJoinRequestsWithProfiles,
+  ThesisGroupProfileRoleEnum,
+} from "@/types/schema";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,13 +17,12 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { MessageSquare } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
-import { v4 as uuidv4 } from "uuid";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { generateRandomName } from "@/utils/helpers";
 
 interface PendingRequestListProps {
-  pendingRequests: JoinGroupRequest[];
+  pendingRequests: PendingJoinRequestsWithProfiles[];
   groupId: string;
 }
 

@@ -1,4 +1,4 @@
-import { Home, BookOpen, Group, User2, LayoutDashboard } from "lucide-react";
+import { Home, BookOpen, Group, User2 } from "lucide-react";
 import Image from "next/image";
 import { getCurrentProfile } from "@/db-actions/auth";
 import { createClient } from "@/utils/supabase/server";

@@ -61,6 +61,7 @@ export default function CreateDraftStashModal({
           }
           resolve("Draft created successfully");
         } catch (error) {
+          console.error(error);
           reject("Failed to create draft");
         }
       }

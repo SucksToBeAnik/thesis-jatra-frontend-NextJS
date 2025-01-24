@@ -18,32 +18,6 @@ function getRoleBadgeColor(role: string) {
   }
 }
 
-interface Member {
-  id: string;
-  username: string;
-  role: string;
-  profile_id: string;
-}
-
-interface GroupProject {
-  id: string;
-  group_id: string;
-  thesis_group_profiles: Member[];
-}
-
-interface Draft {
-  id: string;
-  title: string;
-  content: string;
-  is_public: boolean;
-  created_at: string;
-  group_projects: GroupProject;
-}
-
-interface DraftViewPageProps {
-  draft: Draft;
-}
-
 export default async function Page({ params }: { params: { id: string } }) {
   const draftId = params.id;
 

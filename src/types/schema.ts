@@ -21,6 +21,7 @@ export type ThesisGroupProfileRoleEnum =
 
 // custom query types
 const supabase = createClient();
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getThesisGroupProfileWithGroups = supabase
   .from("thesis_group_profiles")
   .select("*,thesis_groups(*)")
@@ -31,6 +32,7 @@ export type ThesisGroupProfileWithGroups = QueryData<
   typeof getThesisGroupProfileWithGroups
 >;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getPendingJoinInvitationsWithGroupData = supabase
   .from("join_group_invitations")
   .select("*,thesis_groups(*)")
@@ -41,6 +43,7 @@ export type PendingJoinInvitationsWithGroupData = QueryData<
   typeof getPendingJoinInvitationsWithGroupData
 >;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getPendingJoinRequestsWithGroupData = supabase
   .from("join_group_requests")
   .select("*,thesis_groups(*)")
@@ -50,7 +53,7 @@ const getPendingJoinRequestsWithGroupData = supabase
 export type PendingJoinRequestsWithGroupData = QueryData<
   typeof getPendingJoinRequestsWithGroupData
 >;
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getPublicDraftsWithMemberNames = supabase
   .from("project_drafts")
   .select(
@@ -68,5 +71,15 @@ const getPublicDraftsWithMemberNames = supabase
   .single();
 export type PublicDraftsWithMemberNames = QueryData<
   typeof getPublicDraftsWithMemberNames
+>;
+
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getPendingJoinRequestsWithProfiles = supabase
+.from("join_group_requests")
+.select("*,profiles(*)")
+.single();
+export type PendingJoinRequestsWithProfiles = QueryData<
+  typeof getPendingJoinRequestsWithProfiles
 >;
 // -------end of custom query types-------

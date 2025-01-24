@@ -18,11 +18,12 @@ export default function AcceptInvitationButton({
   profileId,
   role,
 }: AcceptInvitationButtonProps) {
+  console.log(role)
   const router = useRouter();
   async function handleAcceptInvitation() {
     toast.loading("Accepting invitation...");
     const supabase = createClient();
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("thesis_group_profiles")
       .insert([
         {

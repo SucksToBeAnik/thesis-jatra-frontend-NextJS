@@ -32,6 +32,7 @@ export default function DraftEditor({ draft }: DraftEditorProps) {
           table: "project_drafts",
           filter: `id=eq.${draft.id}` // Add filter for specific draft
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (payload: any) => {
           console.log("Realtime update received:", payload);
           if (payload.new && payload.new.content !== content) {
@@ -47,7 +48,7 @@ export default function DraftEditor({ draft }: DraftEditorProps) {
       console.log("Cleaning up subscription");
       supabase.removeChannel(channel);
     };
-  }, [draft.id]);
+  }, [draft.id, content]);
 
   const updateDraftContent = debounce(async (newContent: string) => {
     const updateRes = await updateDraftContentGivenId(

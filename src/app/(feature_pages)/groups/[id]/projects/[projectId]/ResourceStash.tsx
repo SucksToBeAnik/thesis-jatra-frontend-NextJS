@@ -4,7 +4,7 @@ import { Resource } from "@/types/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { PlusCircle, ExternalLink, FileText } from "lucide-react";
+import { ExternalLink, FileText } from "lucide-react";
 import Link from "next/link";
 import CreateResourceDialog from "./CreateResourceDialog";
 
@@ -74,7 +74,7 @@ export default function ResourceStash({
               <div className="flex flex-col items-center justify-center h-[400px] text-center">
                 <p className="text-muted-foreground mb-2">No resources found</p>
                 <p className="text-sm text-muted-foreground">
-                  Click "Add Resource" to get started
+                  Click &quot;Add Resource&quot; to get started
                 </p>
               </div>
             )}

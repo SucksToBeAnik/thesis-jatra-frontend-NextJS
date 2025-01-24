@@ -1,37 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { FileText, Users, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/server";
 import { getPublicDrafts } from "@/db-actions/project-drafts";
-
-interface Member {
-  id: string;
-  username: string;
-  role: string;
-  profile_id: string;
-}
-
-interface GroupProject {
-  id: string;
-  group_id: string;
-  thesis_group_profiles: Member[];
-}
-
-interface Draft {
-  id: string;
-  title: string;
-  content: string;
-  is_public: boolean;
-  created_at: string;
-  group_projects: GroupProject;
-}
-
-interface PapersPageProps {
-  drafts: Draft[];
-}
 
 function getRoleBadgeColor(role: string) {
   switch (role) {

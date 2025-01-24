@@ -3,7 +3,7 @@ import {
   ThesisGroupProfileWithGroups,
   PendingJoinInvitationsWithGroupData,
   PendingJoinRequestsWithGroupData,
-  JoinGroupRequest,
+  PendingJoinRequestsWithProfiles,
 } from "@/types/schema";
 import { db, DbQueryResult } from "@/types";
 import { currentAuthUserProc } from "../auth";
@@ -102,7 +102,7 @@ export async function getPendingJoinRequests(
 export async function getPendingJoinRequestsGivenGroupId(
   db: db,
   groupId: string
-): Promise<DbQueryResult<JoinGroupRequest[]>> {
+): Promise<DbQueryResult<PendingJoinRequestsWithProfiles[]>> {
   const { data, error } = await db
     .from("join_group_requests")
     .select("*,profiles(*)")

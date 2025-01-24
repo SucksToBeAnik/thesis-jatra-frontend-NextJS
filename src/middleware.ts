@@ -10,9 +10,6 @@ const redirectUrl = (request: NextRequest, path: string) => {
 export async function middleware(request: NextRequest) {
   const requestedPath = request.nextUrl.pathname;
 
-  // Define public routes
-  const publicRoutes = ["/"];
-
   try {
     console.log("Middleware running");
 

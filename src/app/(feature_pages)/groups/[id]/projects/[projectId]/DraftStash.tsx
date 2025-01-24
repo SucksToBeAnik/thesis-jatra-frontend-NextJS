@@ -33,11 +33,10 @@ export default function DraftStash({
     // Delete the selected draft
     const supabase = createClient();
     // check if the the current user is the owner of the draft
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("project_drafts")
       .delete()
       .eq("id", draftId);
-
     if (error) {
       toast.error("Failed to delete draft");
       return;

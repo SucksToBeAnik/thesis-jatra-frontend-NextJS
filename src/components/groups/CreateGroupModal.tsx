@@ -79,6 +79,7 @@ export default function CreateGroupModal({
           }
           resolve("A new group created successfully");
         } catch (error) {
+          console.error(error)
           reject("Failed to create draft");
         }
       }

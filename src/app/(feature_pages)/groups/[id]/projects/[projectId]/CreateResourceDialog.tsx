@@ -25,7 +25,6 @@ import { toast } from "sonner";
 import { createClient } from "@/utils/supabase/client";
 import { v4 as uuidv4 } from "uuid";
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_FILE_TYPES = ["application/pdf"] as const;
 
 const formSchema = z.object({
@@ -82,6 +81,7 @@ export default function CreateResourceDialog({
           }
           resolve("Resource created successfully");
         } catch (error) {
+          console.error(error);
           reject("Failed to create resource");
         }
       }
@@ -145,7 +145,7 @@ export default function CreateResourceDialog({
             <FormField
               name="resourceFile"
               control={form.control}
-              render={({ field }) => (
+              render={({ }) => (
                 <FormItem>
                   <FormLabel htmlFor="title">Upload resource</FormLabel>
                   <FormControl>
